@@ -29,9 +29,5 @@ const mapClassNameBySize = {
 export const Title = ({ text, size = 'xs', className }: Props) => {
   const Component = mapTagBySize[size];
 
-  return (
-    <Component className={cn(mapClassNameBySize[size], className)}>
-      {text}
-    </Component>
-  );
-}
+  return <Component className={cn(mapClassNameBySize[size], className)}>{text}</Component>;
+};

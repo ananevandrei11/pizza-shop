@@ -1,17 +1,17 @@
-import Image from "next/image"
-import { ArrowRight, ShoppingCart, User } from "lucide-react"
+import Image from 'next/image';
+import { ArrowRight, ShoppingCart, User } from 'lucide-react';
 
-import { cn } from "@/lib/utils"
-import { Container } from "./container"
-import { Button } from "../ui"
+import { cn } from '@/lib/utils';
+import { Container } from './container';
+import { Button } from '../ui';
 
 interface Props {
-  className?: string
+  className?: string;
 }
 
 export const Header = ({ className }: Props) => {
   return (
-    <header className={cn("border border-b", className)}>
+    <header className={cn('border border-b', className)}>
       <Container className="flex items-center justify-between py-8">
         {/* Left side */}
         <div className="flex items-center gap-4">
@@ -35,11 +35,14 @@ export const Header = ({ className }: Props) => {
                 <ShoppingCart size={16} className="relative" strokeWidth={2} />
                 <b>33</b>
               </div>
-              <ArrowRight size={20} className="absolute right-5 transition duration-300 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0" />
+              <ArrowRight
+                size={20}
+                className="absolute right-5 transition duration-300 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
+              />
             </Button>
           </div>
         </div>
       </Container>
     </header>
-  )
-}
+  );
+};

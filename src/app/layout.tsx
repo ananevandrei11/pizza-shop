@@ -1,18 +1,18 @@
-import type { Metadata } from "next";
-import { Nunito } from "next/font/google";
-import "./globals.css";
-import { Header } from "@/components/shared";
+import type { Metadata } from 'next';
+import { Nunito } from 'next/font/google';
+import './globals.css';
+import { Header } from '@/components/shared';
 
 const nunito = Nunito({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-nunito",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-nunito',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800', '900'],
 });
 
 export const metadata: Metadata = {
-  title: "Pizza Shop",
-  description: "Pizza Shop. NextJs + TailwindCSS",
+  title: 'Pizza Shop',
+  description: 'Pizza Shop. NextJs + TailwindCSS',
 };
 
 export default function RootLayout({
@@ -24,9 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={nunito.className}>
         <Header />
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <main className="min-h-screen">{children}</main>
       </body>
     </html>
   );

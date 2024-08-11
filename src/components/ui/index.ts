@@ -1,5 +1,5 @@
-export { Button, buttonVariants } from "./button"
-export { Checkbox } from "./checkbox"
+export { Button, buttonVariants } from './button';
+export { Checkbox } from './checkbox';
 export {
   Dialog,
   DialogPortal,
@@ -11,7 +11,7 @@ export {
   DialogFooter,
   DialogTitle,
   DialogDescription,
-} from "./dialog"
+} from './dialog';
 export {
   Drawer,
   DrawerPortal,
@@ -23,9 +23,9 @@ export {
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,
-} from "./drawer"
-export { Input } from "./input"
-export { Popover, PopoverTrigger, PopoverContent } from "./popover"
-export { RadioGroup, RadioGroupItem } from "./radio-group"
-export { Select } from "./select"
-export { Slider } from "./slider"
+} from './drawer';
+export { Input } from './input';
+export { Popover, PopoverTrigger, PopoverContent } from './popover';
+export { RadioGroup, RadioGroupItem } from './radio-group';
+export { Select } from './select';
+export { Slider } from './slider';
