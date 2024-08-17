@@ -1,4 +1,5 @@
-import { Container, Filters, Title, TopBar } from '@/components/shared';
+import { Container, Filters, ProductsGroupList, Title, TopBar } from '@/components/shared';
+import { CATEGORY_PRODUCT_LIST } from '@/config/constants/mockData';
 
 export default function Home() {
   return (
@@ -9,20 +10,27 @@ export default function Home() {
       <TopBar />
 
       <Container className="mt-10 pb-4">
-        {/* Filters */}
         <div className="flex gap-[60px]">
+          {/* Filters */}
           <div className="w-[250px]">
             <Filters />
           </div>
-        </div>
-        {/* List of products */}
-        <div className="flex-1">
-          <div className="flex flex-col gap-16">List of products</div>
+          {/* List of products */}
+          <div className="flex-1">
+            <div className="flex flex-col gap-16">
+              {CATEGORY_PRODUCT_LIST.map(category => (
+                <ProductsGroupList
+                  key={category.id}
+                  title={category.name}
+                  htmlId={category.name}
+                  items={category.items}
+                  categoryId={category.id}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </Container>
-      <div>
-        <h1>Home</h1>
-      </div>
     </>
   );
 }

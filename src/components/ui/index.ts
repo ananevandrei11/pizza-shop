@@ -29,3 +29,4 @@ export { Popover, PopoverTrigger, PopoverContent } from './popover';
 export { RadioGroup, RadioGroupItem } from './radio-group';
 export { Select } from './select';
 export { Slider } from './slider';
+export { EURO } from './currency';
