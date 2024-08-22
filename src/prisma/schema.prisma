@@ -19,6 +19,7 @@ model User {
   orders           Order[]
   provier          String?
   providerId       String?
+  verified         DateTime
   verificationCode VerificationCode?
 
   createdAt DateTime @default(now())
