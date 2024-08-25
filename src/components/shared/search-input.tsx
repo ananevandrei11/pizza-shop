@@ -41,9 +41,9 @@ export const SearchInput = ({ className }: Props) => {
   );
 
   useEffect(() => {
-    if (debouncedValue && debouncedValue.length > 0) {
+    if (debouncedValue && debouncedValue.trim().length > 0) {
       Api.products
-        .search(debouncedValue)
+        .search(debouncedValue.trim())
         .then(res => setProducts(res))
         .catch(() => setProducts([]));
     } else {
@@ -75,7 +75,7 @@ export const SearchInput = ({ className }: Props) => {
             },
           )}
         >
-          <ul className="max-h-24 md:max-h-36 overflow-y-auto py-2">
+          <ul className="max-h-24 md:max-h-36 overflow-y-auto scrollbar py-2">
             {products.length === 0 && <li className="px-3 py-2 w-full">No results found</li>}
             {products.map(item => (
               <li key={item.id}>

@@ -18,7 +18,7 @@ const generatePizza = ({
 }: {
   productId: number;
   pizzaType: 1 | 2;
-  size: 25 | 35;
+  size: 25 | 35 | 45;
 }): Prisma.ProductItemCreateManyInput => {
   return {
     productId,

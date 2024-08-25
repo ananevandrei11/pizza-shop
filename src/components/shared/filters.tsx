@@ -1,43 +1,82 @@
+'use client';
 import { cn } from '@/lib/utils';
-import { INGREDIENTS } from '@/config/constants/mockData';
+import { useFilters, useFiltersSetQueryParams, useGetIngredients } from '@/hooks';
 
-import { Input } from '../ui';
 import { Title } from './title';
-import { FilterCheckbox } from './filter-checkbox';
-import { RangeSlider } from './range-slider';
 import { CheckboxFIltersGroup } from './checkbox-filters-group';
+import { RangePrices } from './range-prices';
 
 interface Props {
   className?: string;
 }
 
+const SIZES = [
+  {
+    text: '25 sm',
+    value: '25',
+  },
+  {
+    text: '35 sm',
+    value: '35',
+  },
+  {
+    text: '45 sm',
+    value: '45',
+  },
+];
+
+const PIZZA_TYPES = [
+  {
+    text: 'Thin',
+    value: '1',
+  },
+  {
+    text: 'Thick',
+    value: '2',
+  },
+];
+
 export const Filters = ({ className }: Props) => {
+  const { ingredients, loading: ingredientsLoading } = useGetIngredients();
+  const ingredientsList = ingredients.map(ing => ({ value: String(ing.id), text: ing.name }));
+
+  const { filters, handlers } = useFilters();
+
+  useFiltersSetQueryParams({
+    filters,
+  });
+
   return (
     <div className={cn('', className)}>
       <Title text="Filters" size="sm" className="mb-5 font-bold" />
-
-      <div className="flex flex-col gap-4">
-        <FilterCheckbox text="You can choose" value="1" />
-        <FilterCheckbox text="New products" value="2" />
-      </div>
-
-      <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
-        <p className="font-bold mb-3">Price from and to</p>
-        <div className="flex gap-3 mb-5">
-          <Input type="number" placeholder="0" min={0} max={100} defaultValue={0} />
-          <Input type="number" placeholder="100" min={10} max={100} />
-        </div>
-
-        <RangeSlider min={0} max={100} step={5} value={[0, 100]} />
-      </div>
-
+      <RangePrices initPrices={filters.prices} updateInitPrices={handlers.setPrices} />
       <CheckboxFIltersGroup
+        prefixName="sizes-pizza"
+        title="Sizes pizza"
+        className="mt-5"
+        limit={6}
+        items={SIZES}
+        checkedValues={filters.sizesIds}
+        onChange={handlers.setSizes}
+      />
+      <CheckboxFIltersGroup
+        prefixName="pizza-types"
+        title="Dough"
+        className="mt-5"
+        limit={6}
+        items={PIZZA_TYPES}
+        checkedValues={filters.pizzaTypesIds}
+        onChange={handlers.setPizzaTypes}
+      />
+      <CheckboxFIltersGroup
+        prefixName="ingredients"
         title="Ingredients"
         className="mt-5"
         limit={6}
-        defaultItems={INGREDIENTS}
-        items={INGREDIENTS}
-        searchInputPlaceholder="Search..."
+        items={ingredientsList}
+        checkedValues={filters.ingredientsIds}
+        loading={ingredientsLoading}
+        onChange={handlers.setIngredients}
       />
     </div>
   );
