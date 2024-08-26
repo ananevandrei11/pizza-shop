@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Plus } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -15,18 +16,20 @@ interface Props {
   className?: string;
 }
 
-export const ProductCard = ({ price, name, imageUrl, className }: Props) => {
+export const ProductCard = ({ id, price, name, imageUrl, className }: Props) => {
   return (
     <div className={cn('w-full', className)}>
-      <div className="flex justify-center p-6 bg-secondary rounded-lg h-[260px]">
-        <Image
-          className="w-[215px] h-[215px]"
-          src={imageUrl || ''}
-          alt={name}
-          width={215}
-          height={215}
-        />
-      </div>
+      <Link href={`/product/${id}`}>
+        <div className="flex justify-center p-6 bg-secondary rounded-lg h-[260px]">
+          <Image
+            className="w-[215px] h-[215px]"
+            src={imageUrl || ''}
+            alt={name}
+            width={215}
+            height={215}
+          />
+        </div>
+      </Link>
       <Title text={name} size="sm" className="mb-1 mt-3 font-bold" />
       <p className="text-sm text-gray-400">Some kind of composition</p>
 

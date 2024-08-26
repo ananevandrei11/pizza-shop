@@ -5,13 +5,13 @@ import { Input } from '../ui';
 import { RangeSlider } from './range-slider';
 
 interface Props {
-  initPrices: number[];
+  initPrices: (number | undefined)[];
   updateInitPrices: (value: number[]) => void;
   className?: string;
 }
 
 export const RangePrices = ({ initPrices, updateInitPrices, className }: Props) => {
-  const [prices, setPrices] = useState<number[]>(initPrices);
+  const [prices, setPrices] = useState<(number | undefined)[]>(initPrices);
   const updateOnePrice = useCallback(
     (e: ChangeEvent<HTMLInputElement>, type: 'min' | 'max') => {
       const value = e.target.value;
@@ -30,7 +30,7 @@ export const RangePrices = ({ initPrices, updateInitPrices, className }: Props) 
   };
 
   useEffect(() => {
-    updateInitPrices(prices);
+    updateInitPrices(prices as number[]);
   }, [prices, updateInitPrices]);
 
   return (
@@ -44,7 +44,7 @@ export const RangePrices = ({ initPrices, updateInitPrices, className }: Props) 
           placeholder="0"
           min="0"
           max="100"
-          value={prices[0]}
+          value={String(prices[0])}
           onChange={e => updateOnePrice(e, 'min')}
         />
         <Input
@@ -54,12 +54,18 @@ export const RangePrices = ({ initPrices, updateInitPrices, className }: Props) 
           placeholder="100"
           min="0"
           max="100"
-          value={prices[1]}
+          value={String(prices[1])}
           onChange={e => updateOnePrice(e, 'max')}
         />
       </div>
 
-      <RangeSlider min={0} max={100} step={5} value={prices} onValueChange={updatePrices} />
+      <RangeSlider
+        min={0}
+        max={100}
+        step={5}
+        value={[prices[0] || 0, prices[1] || 100]}
+        onValueChange={updatePrices}
+      />
     </div>
   );
 };

@@ -4,9 +4,9 @@ import { useEffect, useRef } from 'react';
 import { useIntersection } from 'react-use';
 import { Product } from '@prisma/client';
 import { cn } from '@/lib/utils';
+import { useCategoryStore } from '@/store';
 import { Title } from './title';
 import { ProductCard } from './product-card';
-import { useCategoryStore } from '@/store';
 
 interface Props {
   htmlId: string;

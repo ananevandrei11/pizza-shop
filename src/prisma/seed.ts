@@ -19,13 +19,20 @@ const generatePizza = ({
   productId: number;
   pizzaType: 1 | 2;
   size: 25 | 35 | 45;
-}): Prisma.ProductItemCreateManyInput => {
+}): Prisma.ProductItemUncheckedCreateInput => {
   return {
     productId,
     size,
     pizzaType,
     price: randomNumber(5, 15),
   };
+};
+
+const generateProductItem = ({ productId }: { productId: number }) => {
+  return {
+    productId,
+    price: randomNumber(1, 10),
+  } as Prisma.ProductItemUncheckedCreateInput;
 };
 
 async function generateMockData() {
@@ -80,6 +87,18 @@ async function generateMockData() {
       generatePizza({ productId: pizzaCapricciosa.id, pizzaType: 2, size: 25 }),
       generatePizza({ productId: pizzaFourCheese.id, pizzaType: 1, size: 35 }),
       generatePizza({ productId: pizzaFourCheese.id, pizzaType: 2, size: 25 }),
+
+      generateProductItem({ productId: 1 }),
+      generateProductItem({ productId: 2 }),
+      generateProductItem({ productId: 3 }),
+      generateProductItem({ productId: 4 }),
+      generateProductItem({ productId: 5 }),
+      generateProductItem({ productId: 6 }),
+      generateProductItem({ productId: 7 }),
+      generateProductItem({ productId: 8 }),
+      generateProductItem({ productId: 9 }),
+      generateProductItem({ productId: 10 }),
+      generateProductItem({ productId: 11 }),
     ],
   });
 

@@ -8,7 +8,7 @@ interface Props {
     ingredientsIds: Set<string>;
     sizesIds: Set<string>;
     pizzaTypesIds: Set<string>;
-    prices: number[];
+    prices: (number | undefined)[];
   };
 }
 
