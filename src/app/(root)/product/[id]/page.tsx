@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { prisma } from '@/prisma/prisma-client';
-import { Container, GroupVariants, PizzaImage, Title } from '@/components/shared';
+import { Container, GroupVariants, PizzaImage, Title } from '@/shared/components/shared';
 
 interface Props {
   params: {

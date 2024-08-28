@@ -83,8 +83,12 @@ async function generateMockData() {
     data: [
       generatePizza({ productId: pizzaMargherita.id, pizzaType: 1, size: 35 }),
       generatePizza({ productId: pizzaMargherita.id, pizzaType: 2, size: 25 }),
+      generatePizza({ productId: pizzaCapricciosa.id, pizzaType: 1, size: 25 }),
       generatePizza({ productId: pizzaCapricciosa.id, pizzaType: 1, size: 35 }),
+      generatePizza({ productId: pizzaCapricciosa.id, pizzaType: 1, size: 45 }),
       generatePizza({ productId: pizzaCapricciosa.id, pizzaType: 2, size: 25 }),
+      generatePizza({ productId: pizzaCapricciosa.id, pizzaType: 2, size: 35 }),
+      generatePizza({ productId: pizzaCapricciosa.id, pizzaType: 2, size: 45 }),
       generatePizza({ productId: pizzaFourCheese.id, pizzaType: 1, size: 35 }),
       generatePizza({ productId: pizzaFourCheese.id, pizzaType: 2, size: 25 }),
 

@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Button } from '@/components/ui';
+import { Button } from '@/shared/components/ui';
 
 test('Button variant=outline size=lg', () => {
   const res = render(
