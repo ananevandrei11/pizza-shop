@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Container, Filters, ProductsGroupList, Title, TopBar } from '@/shared/components/shared';
 import { prisma } from '@/prisma/prisma-client';
 
@@ -24,7 +25,9 @@ export default async function Home() {
         <div className="flex gap-[60px]">
           {/* Filters */}
           <div className="w-[250px]">
-            <Filters />
+            <Suspense>
+              <Filters />
+            </Suspense>
           </div>
           {/* List of products */}
           <div className="flex-1">

@@ -31,3 +31,15 @@ export { Select } from './select';
 export { Slider } from './slider';
 export { Skeleton } from './skeleton';
 export { EURO } from './currency';
+export {
+  Sheet,
+  SheetPortal,
+  SheetOverlay,
+  SheetTrigger,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+} from './sheet';

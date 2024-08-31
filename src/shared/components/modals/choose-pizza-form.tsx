@@ -14,7 +14,7 @@ interface Props {
   ingredients: Ingredient[];
   items: ProductItem[];
   loading?: boolean;
-  onSubmit: (itemId: number, ingredients: number[]) => void;
+  onSubmit: (productItemId: number, ingredients: number[]) => void;
   className?: string;
 }
 
@@ -23,12 +23,20 @@ export const ChoosePIzzaForm = ({
   name,
   ingredients,
   items,
-  // onSubmit,
-  // loading,
+  onSubmit,
+  loading,
   className,
 }: Props) => {
-  const { size, setSize, type, setType, availableSizes, selectedIngredients, addIngredient } =
-    usePizzaOptions(items);
+  const {
+    size,
+    setSize,
+    type,
+    setType,
+    availableSizes,
+    selectedIngredients,
+    currentItemId,
+    addIngredient,
+  } = usePizzaOptions(items);
 
   const totalPrice = calcTotalPizzaPrice({
     items,
@@ -39,7 +47,9 @@ export const ChoosePIzzaForm = ({
   });
 
   const handleSubmit = () => {
-    console.log({ size, type, selectedIngredients, totalPrice });
+    if (currentItemId) {
+      onSubmit(currentItemId, Array.from(selectedIngredients));
+    }
   };
 
   return (
@@ -48,7 +58,11 @@ export const ChoosePIzzaForm = ({
         <PizzaImage src={imageUrl} alt={name} size={size} />
       </div>
 
-      <div className="p-7 bg-[#f5f5f5] flex flex-col gap-4">
+      <div
+        className={cn('p-7 bg-[#f5f5f5] flex flex-col gap-4', {
+          'pointer-events-none': loading,
+        })}
+      >
         <Title text={name} size="md" className="font-extrabold mb-1" />
         <p className="text-gray-400">Some kind of composition</p>
         <GroupVariants<PizzaSize> items={availableSizes} value={size} onClick={setSize} />
@@ -68,6 +82,7 @@ export const ChoosePIzzaForm = ({
           </div>
         </div>
         <Button
+          loading={loading}
           disabled={totalPrice === 0}
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
           onClick={handleSubmit}
