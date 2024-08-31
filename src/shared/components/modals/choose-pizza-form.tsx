@@ -1,12 +1,12 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { useSet } from 'react-use';
 
 import { cn } from '@/shared/lib/utils';
 import { Ingredient, ProductItem } from '@prisma/client';
-import { PizzaSize, pizzaSizes, PizzaType, pizzaTypes } from '@/shared/constants';
+import { PizzaSize, PizzaType, pizzaTypes } from '@/shared/constants';
 import { GroupVariants, IngredientItem, PizzaImage, Title } from '../shared';
 import { Button, EURO } from '../ui';
+import { calcTotalPizzaPrice } from '@/shared/lib';
+import { usePizzaOptions } from '@/shared/hooks';
 
 interface Props {
   imageUrl: string;
@@ -27,37 +27,16 @@ export const ChoosePIzzaForm = ({
   // loading,
   className,
 }: Props) => {
-  const [size, setSize] = useState<PizzaSize>(25);
-  const [type, setType] = useState<PizzaType>(1);
-  const [selectedIngredients, { toggle: toggleIngredient }] = useSet(new Set<number>([]));
+  const { size, setSize, type, setType, availableSizes, selectedIngredients, addIngredient } =
+    usePizzaOptions(items);
 
-  const pizzaAvailableSizeByType = items
-    .filter(item => item.pizzaType === type)
-    .map(item => item.size) as PizzaSize[];
-  const availableSizes = pizzaSizes.map(size => ({
-    value: size.value,
-    name: size.name,
-    disabled: !pizzaAvailableSizeByType.includes(size.value),
-  }));
-  console.log({ pizzaAvailableSizeByType, availableSizes });
-
-  useEffect(() => {
-    setSize(prev => {
-      if (
-        !pizzaAvailableSizeByType.some(size => size === prev) &&
-        pizzaAvailableSizeByType.length > 0
-      ) {
-        return pizzaAvailableSizeByType[0];
-      }
-      return prev;
-    });
-  }, [pizzaAvailableSizeByType]);
-
-  const pizzaPrice = items.find(item => item.pizzaType === type && item.size === size)?.price || 0;
-  const ingredientsPrice = ingredients
-    .filter(ingredient => selectedIngredients.has(ingredient.id))
-    .reduce((acc, ingredient) => acc + ingredient.price, 0);
-  const totalPrice = pizzaPrice !== 0 ? pizzaPrice + ingredientsPrice : 0;
+  const totalPrice = calcTotalPizzaPrice({
+    items,
+    ingredients,
+    selectedIngredients,
+    size,
+    type,
+  });
 
   const handleSubmit = () => {
     console.log({ size, type, selectedIngredients, totalPrice });
@@ -83,7 +62,7 @@ export const ChoosePIzzaForm = ({
                 name={ingredient.name}
                 price={ingredient.price}
                 active={selectedIngredients.has(ingredient.id)}
-                onClick={() => toggleIngredient(ingredient.id)}
+                onClick={() => addIngredient(ingredient.id)}
               />
             ))}
           </div>

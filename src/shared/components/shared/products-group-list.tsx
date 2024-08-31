@@ -19,8 +19,9 @@ interface Props {
 export const ProductsGroupList = ({ htmlId, items, title, categoryId, className }: Props) => {
   const ref = useRef(null);
   const intersection = useIntersection(ref, {
-    threshold: 0.4,
+    threshold: 0.5,
   });
+
   const setActiveId = useCategoryStore(state => state.setActiveId);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export const ProductsGroupList = ({ htmlId, items, title, categoryId, className 
 
   return (
     <div className={cn('', className)} id={htmlId} ref={ref}>
+      <p>{intersection ? 'visible' : 'hidden'}</p>
       <Title text={title} size="lg" className="text-extrabold mb-5" />
       <ul className={cn('grid grid-cols-3 gap-[50px]')}>
         {items.map(product => (
