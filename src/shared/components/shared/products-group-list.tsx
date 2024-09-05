@@ -2,16 +2,16 @@
 
 import { useEffect, useRef } from 'react';
 import { useIntersection } from 'react-use';
-import { Product } from '@prisma/client';
 import { cn } from '@/shared/lib/utils';
 import { useCategoryStore } from '@/shared/store';
 import { Title } from './title';
 import { ProductCard } from './product-card';
+import { ProductWithRelations } from '@/types/prisma';
 
 interface Props {
   htmlId: string;
   title: string;
-  items: Product[];
+  items: ProductWithRelations[];
   categoryId: number;
   className?: string;
 }
@@ -41,8 +41,8 @@ export const ProductsGroupList = ({ htmlId, items, title, categoryId, className 
               id={product.id}
               imageUrl={product.imageUrl}
               name={product.name}
-              // @ts-ignore
               price={product?.items[0]?.price || 0}
+              ingredients={product.ingredients}
             />
           </li>
         ))}

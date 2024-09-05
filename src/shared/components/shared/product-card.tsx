@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
 
+import { Ingredient } from '@prisma/client';
 import { cn } from '@/shared/lib/utils';
 
 import { Title } from './title';
@@ -11,12 +12,13 @@ interface Props {
   id: number;
   name: string;
   price: number;
+  ingredients: Ingredient[];
   count?: number;
   imageUrl?: string;
   className?: string;
 }
 
-export const ProductCard = ({ id, price, name, imageUrl, className }: Props) => {
+export const ProductCard = ({ id, price, ingredients, name, imageUrl, className }: Props) => {
   return (
     <div className={cn('w-full', className)}>
       <Link href={`/product/${id}`}>
@@ -31,7 +33,7 @@ export const ProductCard = ({ id, price, name, imageUrl, className }: Props) => 
         </div>
       </Link>
       <Title text={name} size="sm" className="mb-1 mt-3 font-bold" />
-      <p className="text-sm text-gray-400">Some kind of composition</p>
+      <p className="text-sm text-gray-400">{ingredients.map(item => item.name).join(', ')}</p>
 
       <div className="flex justify-between items-center mt-4">
         <span className="text-[20px]">
@@ -46,15 +48,6 @@ export const ProductCard = ({ id, price, name, imageUrl, className }: Props) => 
           <Plus className="w-4 h-4 mr-1" />
           Add
         </Button>
-
-        {/* {count ? (
-          <CountButton value={count} size="lg" />
-        ) : (
-          <Button variant="secondary">
-            <Plus className="w-4 h-4 mr-1" />
-            Добавить
-          </Button>
-        )} */}
       </div>
     </div>
   );
