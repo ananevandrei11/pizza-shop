@@ -110,7 +110,7 @@ async function generateMockData() {
     data: [
       {
         userId: 1,
-        totalAmount: 0,
+        totalAmount: 16,
         token: '1',
       },
       {

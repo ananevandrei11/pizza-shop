@@ -11,6 +11,7 @@ export function usePizzaOptions(items: ProductItem[]) {
   const [selectedIngredients, { toggle: toggleIngredient }] = useSet(new Set<number>([]));
 
   const availableSizes = getAvailablePizzaSizes({ items, type });
+  const currentItemId = items.find(item => item.pizzaType === type && item.size === size)?.id;
 
   useEffect(() => {
     setSize(prev => {
@@ -27,6 +28,7 @@ export function usePizzaOptions(items: ProductItem[]) {
     type,
     selectedIngredients,
     availableSizes,
+    currentItemId,
     setSize,
     setType,
     addIngredient: toggleIngredient,

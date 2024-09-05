@@ -17,7 +17,7 @@ model User {
   role             UserRole          @default(USER)
   carts            Cart?
   orders           Order[]
-  provier          String?
+  provider         String?
   providerId       String?
   verified         DateTime
   verificationCode VerificationCode?

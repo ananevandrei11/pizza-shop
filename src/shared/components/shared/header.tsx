@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, ShoppingCart, User } from 'lucide-react';
+import { User } from 'lucide-react';
 
 import { cn } from '@/shared/lib/utils';
 
-import { Button, EURO } from '../ui';
+import { Button } from '../ui';
 import { Container } from './container';
 import { SearchInput } from './search-input';
+import { CartButton } from './cart-button';
 
 interface Props {
   className?: string;
@@ -37,20 +38,7 @@ export const Header = ({ className }: Props) => {
             <span>Log in</span>
           </Button>
           <div className="flex items-center gap-1">
-            <Button variant="default" className="flex items-center gap-3 group relative">
-              <b>
-                5 <EURO />
-              </b>
-              <span className="h-full w-[1px] bg-white/30 mx-1" />
-              <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
-                <ShoppingCart size={16} className="relative" strokeWidth={2} />
-                <b>33</b>
-              </div>
-              <ArrowRight
-                size={20}
-                className="absolute right-5 transition duration-300 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
-              />
-            </Button>
+            <CartButton />
           </div>
         </div>
       </Container>
