@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useDebounce, useSet } from 'react-use';
 
@@ -38,18 +38,29 @@ export function useFilters() {
     [prices],
   );
 
-  return {
-    filters: {
+  return useMemo(
+    () => ({
+      filters: {
+        ingredientsIds,
+        sizesIds,
+        pizzaTypesIds,
+        prices: debouncedPrices,
+      },
+      handlers: {
+        setIngredients,
+        setSizes,
+        setPizzaTypes,
+        setPrices,
+      },
+    }),
+    [
+      debouncedPrices,
       ingredientsIds,
-      sizesIds,
       pizzaTypesIds,
-      prices: debouncedPrices,
-    },
-    handlers: {
       setIngredients,
-      setSizes,
       setPizzaTypes,
-      setPrices,
-    },
-  };
+      setSizes,
+      sizesIds,
+    ],
+  );
 }

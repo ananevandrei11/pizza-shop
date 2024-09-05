@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
@@ -16,14 +16,9 @@ interface Props {
 }
 
 export const ChooseProductModal = ({ product, className }: Props) => {
-  console.log(product);
   const router = useRouter();
   const firstItem = product.items?.[0];
   const isPizzaForm = Boolean(firstItem.pizzaType);
-
-  useEffect(() => {
-    router.push(`/product/${product.id}`);
-  }, [router, product]);
 
   const { loading, addCartItem } = useCartStore(state => ({
     addCartItem: state.addCartItem,
