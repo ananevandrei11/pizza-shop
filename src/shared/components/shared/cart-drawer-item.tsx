@@ -17,11 +17,16 @@ export const CartDrawerItem = ({
   name,
   price,
   quantity,
+  disabled,
   onClickCountButton,
   onClickRemove,
 }: Props) => {
   return (
-    <div className={cn('flex bg-white p-5 gap-6', className)}>
+    <div
+      className={cn('flex bg-white p-5 gap-6', className, {
+        ['opacity-50 pointer-events-none']: disabled,
+      })}
+    >
       <CartItem.Image src={imageUrl} />
       <div className="flex-1">
         <CartItem.Info details={details} name={name} />

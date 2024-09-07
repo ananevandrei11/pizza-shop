@@ -20,6 +20,7 @@ export function getCartDetails(data: CartDTO) {
       pizzaSize: item.productItem.size as PizzaSize,
       pizzaType: item.productItem.pizzaType as PizzaType,
       ingredients,
+      disabled: false,
     };
   });
 

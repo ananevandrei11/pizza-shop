@@ -11,8 +11,9 @@ interface CartStateItem {
   name: string;
   price: number;
   pizzaSize?: PizzaSize | null;
-  type?: PizzaType | null;
+  pizzaType?: PizzaType | null;
   ingredients?: { name: string; price: number }[];
+  disabled?: boolean;
 }
 
 export interface CartState {
@@ -44,13 +45,25 @@ export const useCartStore = create<CartState>(set => ({
   },
   updateItemQuantity: async (id: number, quantity: number) => {
     try {
-      set({ loading: true, error: false });
+      set(state => {
+        const upgradedItems = state.items.map(item =>
+          item.id === id ? { ...item, disabled: true } : item,
+        );
+        return {
+          loading: true,
+          error: false,
+          items: upgradedItems,
+        };
+      });
       const data = await Api.cart.updateItemQuantity(id, quantity);
       set(getCartDetails(data));
     } catch (error) {
       set({ error: true });
     } finally {
-      set({ loading: false });
+      set(state => ({
+        loading: false,
+        items: state.items.map(item => ({ ...item, disabled: false })),
+      }));
     }
   },
   addCartItem: async values => {
@@ -66,7 +79,16 @@ export const useCartStore = create<CartState>(set => ({
   },
   removeCartItem: async (id: number) => {
     try {
-      set({ loading: true, error: false });
+      set(state => {
+        const upgradedItems = state.items.map(item =>
+          item.id === id ? { ...item, disabled: true } : item,
+        );
+        return {
+          loading: true,
+          error: false,
+          items: upgradedItems,
+        };
+      });
       const data = await Api.cart.removeCartItem(id);
       set(getCartDetails(data));
     } catch (error) {
