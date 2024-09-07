@@ -9,6 +9,7 @@ import { calcTotalPizzaPrice } from '@/shared/lib';
 import { usePizzaOptions } from '@/shared/hooks';
 
 interface Props {
+  variant: 'page' | 'modal';
   imageUrl: string;
   name: string;
   ingredients: Ingredient[];
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export const ChoosePIzzaForm = ({
+  variant,
   imageUrl,
   name,
   ingredients,
@@ -67,7 +69,11 @@ export const ChoosePIzzaForm = ({
         <p className="text-gray-400">Some kind of composition</p>
         <GroupVariants<PizzaSize> items={availableSizes} value={size} onClick={setSize} />
         <GroupVariants<PizzaType> items={pizzaTypes} value={type} onClick={setType} />
-        <div className="bg-gray-50 p-4 rounded-md max-h-[320px] overflow-auto scrollbar">
+        <div
+          className={cn('bg-gray-50 p-4 rounded-md', {
+            ['max-h-[320px] overflow-auto scrollbar']: variant === 'modal',
+          })}
+        >
           <div className="grid grid-cols-3 gap-3">
             {ingredients.map(ingredient => (
               <IngredientItem
