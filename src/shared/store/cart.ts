@@ -4,7 +4,7 @@ import { getCartDetails } from '../lib';
 import { PizzaSize, PizzaType } from '../constants';
 import { CreateCartItemValuesDTO } from '../services/dto/cart.dto';
 
-interface CartStateItem {
+export interface CartStateItem {
   id: number;
   quantity: number;
   imageUrl: string;
