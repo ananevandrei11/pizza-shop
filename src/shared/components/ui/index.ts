@@ -43,3 +43,4 @@ export {
   SheetTitle,
   SheetDescription,
 } from './sheet';
+export { Textarea } from './textarea';
