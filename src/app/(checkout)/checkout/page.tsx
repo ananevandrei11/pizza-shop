@@ -10,6 +10,8 @@ import {
   CheckoutCartInfo,
   CheckoutPersonalForm,
 } from '@/shared/components/checkout';
+import { createOrder } from '@/app/actions';
+import toast from 'react-hot-toast';
 
 export default function CheckoutPage() {
   const { items, totalAmount, loading, handleRemoveItem, handleUpdateQty } = useCart();
@@ -29,9 +31,18 @@ export default function CheckoutPage() {
   const taxPrice = 0;
   const deliveryPrice = 0;
 
-  const onSubmit = (data: CheckoutFormValues) => {
-    console.log('data', data);
-    form.reset();
+  const onSubmit = async (data: CheckoutFormValues) => {
+    try {
+      const url = await createOrder(data);
+      toast.success('Go to pay');
+
+      if (url) {
+        console.log('url', url);
+        // location.href = url;
+      }
+    } catch (err) {
+      toast.error('Something went wrong');
+    }
   };
 
   return (
@@ -53,7 +64,7 @@ export default function CheckoutPage() {
           </FormProvider>
           <section className="w-1/4">
             <CartCheckoutTotal
-              loading={loading}
+              loading={loading || form.formState.isLoading}
               totalAmount={totalAmount}
               taxPrice={taxPrice}
               deliveryPrice={deliveryPrice}
