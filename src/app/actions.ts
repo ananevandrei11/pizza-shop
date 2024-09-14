@@ -6,6 +6,7 @@ import { OrderStatus } from '@prisma/client';
 import { CheckoutFormValues } from '@/shared/constants/checkout-form-schema';
 import { sendEmail } from '@/shared/lib';
 import { PayOrderTemplate } from '@/shared/components/email-temapltes';
+import axios from 'axios';
 
 export async function createOrder(data: CheckoutFormValues) {
   try {
@@ -72,17 +73,41 @@ export async function createOrder(data: CheckoutFormValues) {
     });
 
     // TODO: ADD STRIPE
+    await prisma.order.update({
+      where: {
+        id: order.id,
+      },
+      data: {
+        paymentId: String(Math.random() * 1000),
+      },
+    });
+
     // TODO: ADD SEND EMAIL (SMTP - for example, nodemailer)
+    console.log({
+      orderId: order.id,
+      totalAmount: order.totalAmount,
+      paymentUrl: 'http://localhost:3000/?paid',
+    });
     await sendEmail(
       email,
       'Next Pizza / Pay for the order #' + order.id,
       PayOrderTemplate({
         orderId: order.id,
         totalAmount: order.totalAmount,
-        paymentUrl: 'http://localhost:3000/',
+        paymentUrl: 'http://localhost:3000/?paid',
       }),
     );
-    return '';
+
+    // EXAMPLE AS WEBHOOK FOR STRIPE
+    await axios.post('http://localhost:3000/api/checkout/callback', {
+      object: {
+        metadata: {
+          order_id: order.id,
+        },
+      },
+    });
+
+    return 'http://localhost:3000/?paid';
   } catch (err) {
     console.log('[CART ORDER]: ', err);
   }

@@ -15,7 +15,7 @@ export const OrderSuccessTemplate = ({ orderId, items }: Props) => (
     <hr />
 
     <ul>
-      {items.map(item => (
+      {items?.map(item => (
         <li key={item.id}>
           {item.productItem.product.name} | {item.productItem.price} <EURO /> x {item.quantity} it.
           = {item.productItem.price * item.quantity} ₽

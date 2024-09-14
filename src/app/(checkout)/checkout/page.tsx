@@ -37,8 +37,7 @@ export default function CheckoutPage() {
       toast.success('Go to pay');
 
       if (url) {
-        console.log('url', url);
-        // location.href = url;
+        location.href = url;
       }
     } catch (err) {
       toast.error('Something went wrong');
