@@ -1,5 +1,6 @@
 'use client';
-import { PropsWithChildren, useEffect } from 'react';
+
+import { PropsWithChildren } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import {
@@ -15,40 +16,17 @@ import {
 } from '../ui';
 import { CartDrawerItem } from './cart-drawer-item';
 import { getCartItemsDetails } from '@/shared/lib';
-import { useCartStore } from '@/shared/store';
 import Image from 'next/image';
 import EmptyBox from '../../../../public/assets/images/empty-box.png';
+import { useCart } from '@/shared/hooks';
 
 interface Props {
   className?: string;
 }
 
 export const CartDrawer = ({ children }: PropsWithChildren<Props>) => {
-  const { totalAmount, items, fetchCartItems, updateItemQuantity, removeCartItem } = useCartStore(
-    state => ({
-      totalAmount: state.totalAmount,
-      items: state.items,
-      fetchCartItems: state.fetchCartItems,
-      updateItemQuantity: state.updateItemQuantity,
-      removeCartItem: state.removeCartItem,
-    }),
-  );
+  const { items, totalAmount, handleRemoveItem, handleUpdateQty } = useCart();
 
-  useEffect(() => {
-    fetchCartItems();
-  }, [fetchCartItems]);
-
-  const handleUpdateQty = (id: number, quantity: number, type: 'plus' | 'minus') => {
-    console.log(id, quantity, type);
-    const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
-    if (newQuantity < 1) return;
-    updateItemQuantity(id, newQuantity);
-  };
-
-  const handleRemoveItem = (id: number) => {
-    removeCartItem(id);
-  };
-  console.log(items);
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
@@ -110,7 +88,7 @@ export const CartDrawer = ({ children }: PropsWithChildren<Props>) => {
                     {totalAmount} <EURO />
                   </span>
                 </b>
-                <Link href={'/cart'}>
+                <Link href={'/checkout'}>
                   <Button asChild className="w-full h-12 text-base">
                     <ArrowRight className="w-5" />
                   </Button>

@@ -10,10 +10,12 @@ import { SearchInput } from './search-input';
 import { CartButton } from './cart-button';
 
 interface Props {
+  isCart?: boolean;
+  isSearch?: boolean;
   className?: string;
 }
 
-export const Header = ({ className }: Props) => {
+export const Header = ({ isCart = true, isSearch = true, className }: Props) => {
   return (
     <header className={cn('border border-b', className)}>
       <Container className="flex items-center justify-between py-8">
@@ -28,18 +30,22 @@ export const Header = ({ className }: Props) => {
           </div>
         </Link>
         {/* Search Block*/}
-        <div className="mx-10 flex-1">
-          <SearchInput />
-        </div>
+        {isSearch && (
+          <div className="mx-10 flex-1">
+            <SearchInput />
+          </div>
+        )}
         {/* Right side */}
         <div className="flex items-center gap-3">
           <Button variant="outline" className="flex items-center gap-1">
             <User size={18} className="shrink-0" />
             <span>Log in</span>
           </Button>
-          <div className="flex items-center gap-1">
-            <CartButton />
-          </div>
+          {isCart && (
+            <div className="flex items-center gap-1">
+              <CartButton />
+            </div>
+          )}
         </div>
       </Container>
     </header>
