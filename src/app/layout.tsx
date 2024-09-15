@@ -1,3 +1,6 @@
+'use client';
+
+import { SessionProvider } from 'next-auth/react';
 import { Toaster } from 'react-hot-toast';
 import { Nunito } from 'next/font/google';
 import './globals.css';
@@ -20,7 +23,7 @@ export default function MainLayout({
         <link rel="icon" href="/logo.png" />
       </head>
       <body className={nunito.className}>
-        {children}
+        <SessionProvider>{children}</SessionProvider>
         <Toaster />
       </body>
     </html>

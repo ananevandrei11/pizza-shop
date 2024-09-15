@@ -1,3 +1,4 @@
+import { getMe } from './auth';
 import { addCartItem, getCart, removeCartItem, updateItemQuantity } from './cart';
 import { getAll } from './ingredients';
 import { search } from './products';
@@ -14,5 +15,8 @@ export const Api = {
     updateItemQuantity,
     removeCartItem,
     addCartItem,
+  },
+  auth: {
+    getMe,
   },
 };
