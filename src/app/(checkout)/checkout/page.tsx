@@ -12,8 +12,12 @@ import {
 } from '@/shared/components/checkout';
 import { createOrder } from '@/app/actions';
 import toast from 'react-hot-toast';
+import { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { Api } from '@/shared/services/api-clients';
 
 export default function CheckoutPage() {
+  const { data: session } = useSession();
   const { items, totalAmount, loading, handleRemoveItem, handleUpdateQty } = useCart();
 
   const form = useForm<CheckoutFormValues>({
@@ -43,6 +47,24 @@ export default function CheckoutPage() {
       toast.error('Something went wrong');
     }
   };
+
+  useEffect(() => {
+    async function fetchUserInfo() {
+      const data = await Api.auth.getMe();
+      const [firstName, lastName] = data.fullName.split(' ');
+      console.log({
+        firstName,
+        lastName,
+      });
+      form.setValue('firstName', firstName);
+      form.setValue('lastName', lastName);
+      form.setValue('email', data.email);
+    }
+
+    if (session) {
+      fetchUserInfo();
+    }
+  }, [form, session]);
 
   return (
     <Container className="pt-6">

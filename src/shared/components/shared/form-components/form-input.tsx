@@ -9,6 +9,7 @@ interface Props {
   label?: string;
   placeholder?: string;
   required?: boolean;
+  type?: HTMLInputElement['type'];
   className?: string;
 }
 
