@@ -33,6 +33,7 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <Container className="flex flex-col my-10">
+      <h1>Title</h1>
       <ProductForm product={product} variant="page" />
     </Container>
   );
